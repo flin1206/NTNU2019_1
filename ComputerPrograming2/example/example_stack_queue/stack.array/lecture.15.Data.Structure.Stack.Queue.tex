@@ -1,0 +1,809 @@
+\documentclass[11pt]{beamer}
+\usetheme[progressbar=frametitle]{metropolis}
+\usepackage{appendixnumberbeamer}
+\usepackage[usenames,dvipsnames]{pstricks}
+\usepackage{epsfig}
+\usepackage{pst-grad} % For gradients
+\usepackage{pst-plot} % For axes
+\usepackage{subfig}
+\usepackage[linesnumbered,ruled,vlined]{algorithm2e}
+\usepackage{booktabs}
+\usepackage[scale=2]{ccicons}
+\usepackage{commath}
+\usepackage{pgfplots}
+\usepackage{listings}
+\usepgfplotslibrary{dateplot}
+\usepackage{setspace}
+\usepackage{skak}
+%\usepackage[backend=biber,
+%style=alphabetic,
+%citestyle=authoryear]{biblatex}
+%\addbibresource{icncache.bib}
+\usepackage{pgfpages}
+\usepackage{url}
+
+%\setbeameroption{show notes on second screen}
+\usepackage{xeCJK}
+\setCJKmainfont{Noto Sans CJK TC}
+
+\usepackage{xspace}
+\newcommand{\themename}{\textbf{\textsc{metropolis}}\xspace}
+
+\setbeamertemplate{frame numbering}{
+\insertframenumber/\inserttotalframenumber
+}
+
+\title{\vspace{1.5em} 15 Data Structure: Stack and Queue}
+\subtitle{Programming in C}
+
+\makeatletter 
+\def\beamer@framenotesbegin{% at beginning of slide
+     \usebeamercolor[fg]{normal text}
+      \gdef\beamer@noteitems{}% 
+      \gdef\beamer@notes{}% 
+}
+\makeatother
+
+\author{\large{Teacher: Po-Wen Chi}\\neokent@gapps.ntnu.edu.tw}
+\institute{
+        \small{Department of Computer Science and Information Engineering,\\
+                National Taiwan Normal University} }
+\titlegraphic{\hfill\includegraphics[height=1.5cm]{NTNU3.jpg}}
+
+\metroset{block=fill}
+
+\begin{document}
+
+\maketitle
+
+\section{Stack}
+
+\begin{frame}
+\frametitle{Stack}
+\begin{itemize}
+\item In computer science, a stack is a data structure ({\color{red}\bf abstract data type}) that serves as {\color{blue}a collection of elements}, with {\bf\color{magenta}two principal operations}:
+    \begin{enumerate}
+    \item {\bf push}:  adds an element to the collection.
+    \item {\bf pop}: removes {\color{purple}the most recently added element} that was not yet removed.
+    \end{enumerate}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Push}
+\begin{figure}
+\centering
+\includegraphics[width=0.9\textwidth]{push.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{Pop}
+\begin{figure}
+\centering
+\includegraphics[width=0.9\textwidth]{pop.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\begin{center}
+\LARGE \bf \color{purple} 
+LIFO: Last in, First out.
+\end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{Where is Stack in My Computer??}
+\begin{itemize}
+\item Compiler.
+    \begin{itemize}
+    \item Parentheses matching.
+    \end{itemize}    
+\item Function Call.
+    \begin{itemize}
+    \item Stacks entered the computer science literature in 1946, when {\color{blue}Alan M. Turing} used the terms {\color{red} bury} and {\color{red} unbury} as a means of calling and returning from subroutines.
+    \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Parentheses Matching}
+Are the following lines valid or invalid?
+\begin{itemize}
+\item ()()()()
+\item (((())))
+\item (()))()
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Function Call}
+\begin{figure}
+\centering
+\includegraphics[width=0.9\textwidth]{function01.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{Function Call}
+\begin{figure}
+\centering
+\includegraphics[width=0.9\textwidth]{function02.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Array-based Implementation}
+\lstset{language=C++,
+                basicstyle=\ttfamily,
+                keywordstyle=\color{blue}\ttfamily,
+                stringstyle=\color{red}\ttfamily,
+                commentstyle=\color{green}\ttfamily,
+                morecomment=[l][\color{magenta}]{\#}
+}
+\begin{lstlisting}
+#define MAX_SIZE    (100)
+
+typedef struct _sStack
+{
+    size_t  top;
+    int32_t elements[MAX_SIZE];
+} sStack;
+\end{lstlisting}
+\begin{figure}
+\centering
+\includegraphics[width=0.8\textwidth]{array.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Push and Pop}
+\lstset{language=C++,
+                basicstyle=\ttfamily,
+                keywordstyle=\color{blue}\ttfamily,
+                stringstyle=\color{red}\ttfamily,
+                commentstyle=\color{green}\ttfamily,
+                morecomment=[l][\color{magenta}]{\#}
+}
+\begin{lstlisting}
+int32_t push_stack( sStack *pS, int32_t val )
+{
+    pS -> elements[ pS -> top ] = val;
+    pS -> top += 1;
+    return 0;
+}
+
+int32_t pop_stack( sStack *pS, int32_t *pVal )
+{
+    pS -> top -= 1;
+    *pVal = pS -> elements[ pS -> top ];    
+    return 0;
+}
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}
+\frametitle{Implementation}
+Please see stack.array.
+\end{frame}
+
+\begin{frame}
+\frametitle{Demo}
+\begin{block}{Parentheses Balance}
+A string of this type is said to be {\bf\color{orange}Parentheses Balanced} if 
+\begin{enumerate}
+\item if it is the empty string.
+\item if A and B are correct, AB is correct.
+\item if A is correct, (A), [A], \{A\} is correct. 
+\end{enumerate}
+\end{block}
+Write a function to decide if a given string is Parentheses Balanced.
+
+How to do this?
+\end{frame}
+
+\begin{frame}
+\frametitle{Idea}
+\begin{itemize}
+\item Undoubtedly, left one and right one should be {\color{red}\bf symmetric}.
+\item When we see a right parenthesis, the last parenthesis must be left and we can cancel this parenthesis pair.
+\item If we can remove all parentheses, the input must be Parentheses Balanced.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Examples}
+\begin{itemize}
+\item Balanced: ((()())())
+    \begin{enumerate}
+    \item<2-> (({\color{red}()}())())
+    \item<3-> (({\color{red}()})())
+    \item<4-> ({\color{red}()}())
+    \item<5-> ({\color{red}()})
+    \item<6-> {\color{red}()}
+    \item<7-> NULL
+    \end{enumerate}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Solved with a Stack}
+\begin{figure}
+\centering
+\includegraphics[width=0.9\textwidth]{balance_stack.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{Implementation}
+Please see balance.c.
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Practice: Latex Begin End Balance}
+You may know that all my slides are made from latex. You do not know latex syntax and that is fine. I will teach you a little bit. 
+
+There are lots of {\color{blue}blocks} in a latex file. One block starts with a keyword {\color{red}begin} and ends with a keyword {\color{red}end}. The example is as follows:
+\begin{lstlisting}
+\begin{displaymath}
+\end{displaymath}
+\end{lstlisting}
+There may be lots of {\color{purple}keywords}, like displaymath in the example. Please write a program to check if a given latex file is balanced with begin and end.
+\end{frame}
+
+\begin{frame}
+\frametitle{Array-based Stack Implementation}
+\begin{itemize}
+\item Pros:
+    \begin{itemize}
+    \item Easy to understand.
+    \item Simple implementation.
+    \end{itemize}
+\item Cons:
+    \begin{itemize}
+    \item Size limitation.
+    \end{itemize}
+\end{itemize}
+\onslide<2->{Can we use {\color{blue}\bf linked list} to implement Stack?}
+
+\onslide<3->{\color{red}Sure! Actually, Linus's implementation can be treated as a stack.}
+\end{frame}
+
+\begin{frame}
+\frametitle{Practice}
+Please implement a stack with list.h used in the previous section.
+\end{frame}
+
+\section{Queue}
+
+\begin{frame}
+\frametitle{Queue}
+\begin{itemize}
+\item What is a {\bf\color{purple}Queue}:
+    \begin{itemize}
+    \item A queue is an {\color{red}ordered list} where {\color{blue}all insertions take place at the rear} while {\color{brown}deletions occur at the front}.
+    \item Also known as {\bf\color{magenta}\Large First-In-First-Out (FIFO)}.
+    \end{itemize}
+\item A real world example:
+    \begin{figure}
+    \centering
+    \includegraphics[width=0.6\textwidth]{real_queue.jpg}
+    \end{figure}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Operations}
+\begin{itemize}
+\item Two Main Operations:
+    \begin{enumerate}
+    \item {\bf\color{red}enqueue}: insert an element at the end.
+    \item {\bf\color{red}dequeue}: remove the element at the front.
+    \end{enumerate}
+\item Other Useful Operations:
+    \begin{itemize}
+    \item {\bf\color{blue}size}
+    \item {\bf\color{blue}isEmpty}
+    \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Array-based Implementation}
+\lstset{language=C++,
+                basicstyle=\ttfamily,
+                keywordstyle=\color{blue}\ttfamily,
+                stringstyle=\color{red}\ttfamily,
+                commentstyle=\color{green}\ttfamily,
+                morecomment=[l][\color{magenta}]{\#}
+}
+\begin{lstlisting}
+#define MAX_SIZE    (100)
+
+typedef struct _sQueue
+{
+    size_t  front;
+    size_t  end;
+    int32_t elements[MAX_SIZE];
+} sQueue;
+\end{lstlisting}
+\begin{figure}
+\centering
+\includegraphics[width=0.9\textwidth]{array_queue.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{Enqueue and Dequeue}
+\begin{itemize}
+\item Initialize
+\begin{figure}
+\centering
+\includegraphics[width=0.9\textwidth]{array_queue_01.png}
+\end{figure}
+\item Enqueue 1
+\begin{figure}
+\centering
+\includegraphics[width=0.9\textwidth]{array_queue_02.png}
+\end{figure}
+\item Enqueue 2
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Enqueue and Dequeue}
+\begin{itemize}
+\item Enqueue 2
+\begin{figure}
+\centering
+\includegraphics[width=0.9\textwidth]{array_queue_03.png}
+\end{figure}
+\item Dequeue
+\begin{figure}
+\centering
+\includegraphics[width=0.9\textwidth]{array_queue_04.png}
+\end{figure}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Array-based Implementation}
+\lstset{language=C++,
+                basicstyle=\ttfamily,
+                keywordstyle=\color{blue}\ttfamily,
+                stringstyle=\color{red}\ttfamily,
+                commentstyle=\color{green}\ttfamily,
+                morecomment=[l][\color{magenta}]{\#}
+}
+\begin{lstlisting}
+int32_t enqueue( sQueue *pQ, int32_t val )
+{
+    pQ -> elements[ pQ -> end ] = val;
+    pQ -> end++;
+    return 0;
+}
+
+int32_t dequeue( sQueue *pQ, int32_t *pVal )
+{
+    *pVal = pQ -> elements[ pQ -> front ]; 
+    pQ -> front++;
+    return 0;
+}
+\end{lstlisting}
+\onslide<2->{{\color{orange}What is the problem}?}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Array-based Implementation}
+\lstset{language=C++,
+                basicstyle=\ttfamily,
+                keywordstyle=\color{blue}\ttfamily,
+                stringstyle=\color{red}\ttfamily,
+                commentstyle=\color{green}\ttfamily,
+                morecomment=[l][\color{magenta}]{\#}
+}
+\begin{lstlisting}
+int32_t enqueue( sQueue *pQ, int32_t val )
+{
+    pQ -> elements[ pQ -> end ] = val;
+    pQ -> end = ( pQ -> end + 1 ) % MAX_SIZE;
+    return 0;
+}
+
+int32_t dequeue( sQueue *pQ, int32_t *pVal )
+{
+    *pVal = pQ -> elements[ pQ -> front ]; 
+    pQ -> front = ( pQ -> front + 1 ) % MAX_SIZE;
+    return 0;
+}
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}
+\frametitle{Implementation}
+Please see queue.array.
+\end{frame}
+
+\begin{frame}
+\frametitle{Practice}
+Please modify the code so that when a new element is enqueued, the oldest element will be removed.
+\end{frame}
+
+\begin{frame}
+\frametitle{Practice}
+Please implement a stack with list.h used in the previous section.
+\end{frame}
+
+\section{Classic Problems}
+
+\begin{frame}
+\Large
+\begin{center}
+We have learned some data structures. 
+
+Now we will use them to solve some classic problems.
+\end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{Classic Problems}
+\begin{itemize}
+\item Maze Problems.
+\item Postfix from Infix.
+\item Service Simulation.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Please Find a Path}
+\begin{center}
+\begin{tabular}{|ccccccccccccccc|}
+\hline
+{\color{blue}0} & 1 & 0 & 0 & 0 & 1 & 1 & 0 & 0 & 0 & 1 & 1 & 1 & 1 & 1 \\
+1 & 0 & 0 & 0 & 1 & 1 & 0 & 1 & 1 & 1 & 0 & 0 & 1 & 1 & 1 \\
+0 & 1 & 1 & 0 & 0 & 0 & 0 & 1 & 1 & 1 & 1 & 0 & 0 & 1 & 1 \\
+1 & 1 & 0 & 1 & 1 & 1 & 1 & 0 & 1 & 1 & 0 & 1 & 1 & 0 & 0 \\
+1 & 1 & 0 & 1 & 0 & 0 & 1 & 0 & 1 & 1 & 1 & 1 & 1 & 1 & 1 \\
+0 & 0 & 1 & 1 & 0 & 1 & 1 & 1 & 0 & 1 & 0 & 0 & 1 & 0 & 1 \\
+0 & 0 & 1 & 1 & 0 & 1 & 1 & 1 & 0 & 1 & 0 & 0 & 1 & 0 & 1 \\
+0 & 1 & 1 & 1 & 1 & 0 & 0 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 \\
+0 & 0 & 1 & 1 & 0 & 1 & 1 & 0 & 1 & 1 & 1 & 1 & 1 & 0 & 1 \\
+1 & 1 & 0 & 0 & 0 & 1 & 1 & 0 & 1 & 1 & 0 & 0 & 0 & 0 & 0 \\
+0 & 0 & 1 & 1 & 1 & 1 & 1 & 0 & 0 & 0 & 1 & 1 & 1 & 1 & 0 \\
+0 & 1 & 0 & 0 & 1 & 1 & 1 & 1 & 1 & 0 & 1 & 1 & 1 & 1 & {\color{blue}0} \\
+\hline
+\end{tabular}
+\end{center}
+0: you can walk; 1: blocked.
+\end{frame}
+
+\begin{frame}
+\frametitle{Movement}
+\begin{figure}
+\centering
+\includegraphics[width=0.9\textwidth]{move.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{Of Course, We can Do it By Hand}
+\begin{center}
+\begin{tabular}{|ccccccccccccccc|}
+\hline
+{\color{blue}0} & 1 & {\color{red}0} & {\color{red}0} & 0 & 1 & 1 & 0 & 0 & 0 & 1 & 1 & 1 & 1 & 1 \\
+1 & {\color{red}0} & 0 & {\color{red}0} & 1 & 1 & 0 & 1 & 1 & 1 & 0 & 0 & 1 & 1 & 1 \\
+0 & 1 & 1 & {\color{red}0} & 0 & 0 & 0 & 1 & 1 & 1 & 1 & 0 & 0 & 1 & 1 \\
+1 & 1 & {\color{red}0} & 1 & 1 & 1 & 1 & 0 & 1 & 1 & 0 & 1 & 1 & 0 & 0 \\
+1 & 1 & {\color{red}0} & 1 & 0 & 0 & 1 & 0 & 1 & 1 & 1 & 1 & 1 & 1 & 1 \\
+{\color{red}0} & {\color{red}0} & 1 & 1 & 0 & 1 & 1 & 1 & 0 & 1 & 0 & 0 & 1 & 0 & 1 \\
+{\color{red}0} & 0 & 1 & 1 & 0 & 1 & 1 & 1 & 0 & 1 & 0 & 0 & 1 & 0 & 1 \\
+{\color{red}0} & 1 & 1 & 1 & 1 & {\color{red}0} & {\color{red}0} & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 \\
+{\color{red}0} & {\color{red}0} & 1 & 1 & {\color{red}0} & 1 & 1 & {\color{red}0} & 1 & 1 & 1 & 1 & 1 & 0 & 1 \\
+1 & 1 & {\color{red}0} & {\color{red}0} & {\color{red}0} & 1 & 1 & {\color{red}0} & 1 & 1 & {\color{red}0} & {\color{red}0} & {\color{red}0} & {\color{red}0} & {\color{red}0} \\
+0 & 0 & 1 & 1 & 1 & 1 & 1 & {\color{red}0} & {\color{red}0} & {\color{red}0} & 1 & 1 & 1 & 1 & {\color{red}0} \\
+0 & 1 & 0 & 0 & 1 & 1 & 1 & 1 & 1 & 0 & 1 & 1 & 1 & 1 & {\color{blue}0} \\
+\hline
+\end{tabular}
+\end{center}
+0: you can walk; 1: blocked.
+\end{frame}
+
+\begin{frame}
+\frametitle{Idea}
+\begin{itemize}
+\item Push all possible movements into the stack.
+\item Pop the first element and then push all possible movements into the stack.
+\item Termination condition:
+    \begin{itemize}
+    \item {\bf Reach endpoint}.
+    \item {\bf Empty stack}: {\color{red}No possible movements}.
+    \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Demo}
+Please see maze.
+\end{frame}
+
+\begin{frame}
+\frametitle{Practice}
+Please modify the code for the following two features:
+\begin{enumerate}
+\item Print the path. \onslide<2->{{\color{red}maze2}}
+\item Find the shortest path.
+\end{enumerate}
+\end{frame}
+
+\begin{frame}
+\frametitle{Potential Problem}
+There is a serious potential problem in maze and maze2. Can you find it?
+
+\onslide<2->{\color{red}Memory leak.}
+\end{frame}
+
+\begin{frame}
+\frametitle{Infix, Postfix and Prefix}
+Infix, Postfix and Prefix notations are three different but {\color{purple}equivalent} ways of writing expressions.
+\begin{itemize}
+\item {\bf\color{blue}Infix}: $a+b$
+    \begin{itemize}
+    \item Operators are written in-between their operands.
+    \end{itemize}
+\item {\bf\color{blue}Postfix}: $ab+$
+    \begin{itemize}
+    \item Operators are written after their operands. 
+    \end{itemize}
+\item {\bf\color{blue}Prefix}: $+ab$
+    \begin{itemize}
+    \item Operators are written before their operands.
+    \end{itemize}
+\end{itemize}
+\onslide<2->{\color{magenta}Are you mad? Why do we need this??}
+\end{frame}
+
+\begin{frame}
+\frametitle{Because of Precedence}
+\begin{itemize}
+\item Infix notation needs extra information to make the order of evaluation of the operators clear.
+    \begin{itemize}
+    \item {\color{red}Operator precedence}.
+    \item {\color{red}Brackets () to allow users to override these rules}.
+    \end{itemize} 
+\item Other two notations have no precedence issue and no brackets are allowed.
+    \begin{itemize}
+    \item Always  {\bf\color{blue}left-to-right}.
+    \item So it will become very easy to calculate the result.
+    \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Example}
+\begin{itemize}
+\item Infix:
+    \begin{displaymath}
+    A/B-C+D\times E-A\times C
+    \end{displaymath}
+\item Postfix:
+    \begin{displaymath}
+    AB/C-DE\times +AC\times -
+    \end{displaymath}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Infix to Postfix}
+\begin{enumerate}
+\item Fully parenthesize the expression.
+\item Move all operators so that they replace their corresponding right parentheses.
+\item Delete all parentheses.
+\end{enumerate}
+\end{frame}
+
+\begin{frame}
+\frametitle{Example}
+\begin{enumerate}
+\item Input: $A/B-C+D\times E-A\times C$.
+\item $((((A/B)-C)+(D\times E))-(A\times C))$.
+\item $((((A/B{\color{red})}-C{\color{red})}+(D\times E{\color{red})}{\color{red})}-(A\times C{\color{red})}{\color{red})}$.
+\item $AB/C-DE\times+AC\times-$
+\end{enumerate}
+\end{frame}
+
+\begin{frame}
+\frametitle{How to Implement?}
+\begin{itemize}
+\item Actually, parenthesis implies {\color{red}precedence}.
+\item That is, 
+    \begin{itemize}
+    \item If the precedence of the input. operator is greater than the precedence of the operator in the stack, push it.
+    \item Else, Pop all the operators from the stack which are greater than or equal to in precedence than that of the scanned operator. After doing that Push the input operator to the stack.
+    \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Example: $A/B-C+D\times E-A\times C$}
+\begin{figure}
+\centering
+\includegraphics[width=0.95\textwidth]{infix_to_postfix_01.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{Example: $A/B-C+D\times E-A\times C$}
+\begin{figure}
+\centering
+\includegraphics[width=0.95\textwidth]{infix_to_postfix_02.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{Example: $A/B-C+D\times E-A\times C$}
+\begin{figure}
+\centering
+\includegraphics[width=0.95\textwidth]{infix_to_postfix_03.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{Example: $A/B-C+D\times E-A\times C$}
+\begin{figure}
+\centering
+\includegraphics[width=0.95\textwidth]{infix_to_postfix_04.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{Example: $A/B-C+D\times E-A\times C$}
+\begin{figure}
+\centering
+\includegraphics[width=0.95\textwidth]{infix_to_postfix_05.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{Example: $A/B-C+D\times E-A\times C$}
+\begin{figure}
+\centering
+\includegraphics[width=0.95\textwidth]{infix_to_postfix_06.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{Example: $A/B-C+D\times E-A\times C$}
+\begin{figure}
+\centering
+\includegraphics[width=0.95\textwidth]{infix_to_postfix_07.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{Example: $A/B-C+D\times E-A\times C$}
+\begin{figure}
+\centering
+\includegraphics[width=0.95\textwidth]{infix_to_postfix_08.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{Example: $A/B-C+D\times E-A\times C$}
+\begin{figure}
+\centering
+\includegraphics[width=0.95\textwidth]{infix_to_postfix_09.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{Example: $A/B-C+D\times E-A\times C$}
+\begin{figure}
+\centering
+\includegraphics[width=0.95\textwidth]{infix_to_postfix_10.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{Example: $A/B-C+D\times E-A\times C$}
+\begin{figure}
+\centering
+\includegraphics[width=0.95\textwidth]{infix_to_postfix_11.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{Example: $A/B-C+D\times E-A\times C$}
+\begin{figure}
+\centering
+\includegraphics[width=0.95\textwidth]{infix_to_postfix_12.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{Example: $A/B-C+D\times E-A\times C$}
+\begin{figure}
+\centering
+\includegraphics[width=0.95\textwidth]{infix_to_postfix_13.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{Example: $A/B-C+D\times E-A\times C$}
+\begin{figure}
+\centering
+\includegraphics[width=0.95\textwidth]{infix_to_postfix_14.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{Example: $A/B-C+D\times E-A\times C$}
+\begin{figure}
+\centering
+\includegraphics[width=0.95\textwidth]{infix_to_postfix_15.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{Demo}
+Please see postfix.
+\end{frame}
+
+\begin{frame}
+\frametitle{Practice}
+The example code does not consider {\color{red} ()}, please implement this feature.
+
+Besides, please implement the calculator again.
+\end{frame}
+
+\begin{frame}
+\frametitle{Service Simulation}
+Service simulation:
+\begin{itemize}
+\item The supermarket opens 12-hour a day.
+\item The customer's service time is a random number from 1 to 4.
+\item The customer's arrival time is a random number from 1 to 4.
+\end{itemize}
+Please write a program to simulate the scenario and answer some questions.
+\begin{figure}
+\centering
+\includegraphics[width=0.8\textwidth]{paypal-check-in.jpg}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{Questions}
+\begin{enumerate}
+\item What is the maximum number of customers in the queue?
+\item What is the longest/average wait any one customer experience?
+\item What happens if the arrival interval is changed from 1-4 minutes to 1-3 minutes?
+\end{enumerate}
+\end{frame}
+
+\begin{frame}
+\frametitle{Demo}
+Please see service.simulation.
+
+\onslide<2->{\color{blue}Please modify this code to simulate the above questions.}
+
+\onslide<3->{\color{magenta}Actually, there is a class called {\Large Queuing Theorem}.}
+\end{frame}
+
+\section{The End of Programming}
+
+\begin{frame}
+\frametitle{Final Reminder}
+\begin{itemize}
+\item We are in the CSIE department. Programming is undoubtedly a necessary skill for everyone.
+\item The only way to improve your skill is to {\color{red}practice more} and {\color{red}think more}.
+\item Learning is a {\color{blue}never-ending} thing and no one can help you.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\begin{center}
+\Large \it \color{purple}
+Congratulations and Good Luck!
+\end{center}
+\end{frame}
+
+\end{document}

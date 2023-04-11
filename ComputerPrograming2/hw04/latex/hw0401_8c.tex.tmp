@@ -1,0 +1,115 @@
+\hypertarget{hw0401_8c}{}\doxysection{hw0401.\+c File Reference}
+\label{hw0401_8c}\index{hw0401.c@{hw0401.c}}
+{\ttfamily \#include $<$getopt.\+h$>$}\newline
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include $<$unistd.\+h$>$}\newline
+{\ttfamily \#include $<$fcntl.\+h$>$}\newline
+{\ttfamily \#include $<$stdint.\+h$>$}\newline
+{\ttfamily \#include $<$time.\+h$>$}\newline
+{\ttfamily \#include $<$sys/types.\+h$>$}\newline
+{\ttfamily \#include $<$sys/stat.\+h$>$}\newline
+{\ttfamily \#include $<$sys/mman.\+h$>$}\newline
+Include dependency graph for hw0401.\+c\+:
+% FIG 0
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct__sBmpHeader}{\+\_\+s\+Bmp\+Header}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{hw0401_8c_a460dc8d0375c9442a736f5551801d5f0}\label{hw0401_8c_a460dc8d0375c9442a736f5551801d5f0}} 
+typedef struct \mbox{\hyperlink{struct__sBmpHeader}{\+\_\+s\+Bmp\+Header}} {\bfseries s\+Bmp\+Header}
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{hw0401_8c_ae4750cf6d9c30e2778d954a110634841}\label{hw0401_8c_ae4750cf6d9c30e2778d954a110634841}} 
+struct \mbox{\hyperlink{struct__sBmpHeader}{\+\_\+s\+Bmp\+Header}} {\bfseries \+\_\+\+\_\+attribute\+\_\+\+\_\+} ((\+\_\+\+\_\+packed\+\_\+\+\_\+))
+\item 
+\mbox{\hyperlink{struct__sBmpHeader}{s\+Bmp\+Header}} \mbox{\hyperlink{hw0401_8c_a3cd148e40fd0371edd8cb4946b80ab29}{transheader}} (\mbox{\hyperlink{struct__sBmpHeader}{s\+Bmp\+Header}} p\+Header)
+\item 
+int \mbox{\hyperlink{hw0401_8c_a0ddf1224851353fc92bfbff6f499fa97}{main}} (int argc, char $\ast$argv\mbox{[}$\,$\mbox{]})
+\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{hw0401_8c_a390e96ee0f7e8c7f77ff6c7f92d72632}\label{hw0401_8c_a390e96ee0f7e8c7f77ff6c7f92d72632}} 
+char \mbox{\hyperlink{hw0401_8c_a390e96ee0f7e8c7f77ff6c7f92d72632}{bm}} \mbox{[}2\mbox{]}
+\begin{DoxyCompactList}\small\item\em store BM \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{hw0401_8c_ab2c6b258f02add8fdf4cfc7c371dd772}\label{hw0401_8c_ab2c6b258f02add8fdf4cfc7c371dd772}} 
+uint32\+\_\+t \mbox{\hyperlink{hw0401_8c_ab2c6b258f02add8fdf4cfc7c371dd772}{size}}
+\begin{DoxyCompactList}\small\item\em B\+MP size. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{hw0401_8c_a8a0a8da4780d357dd4b4846a4d76fa0c}\label{hw0401_8c_a8a0a8da4780d357dd4b4846a4d76fa0c}} 
+uint32\+\_\+t \mbox{\hyperlink{hw0401_8c_a8a0a8da4780d357dd4b4846a4d76fa0c}{reserve}}
+\begin{DoxyCompactList}\small\item\em B\+MP reserve. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{hw0401_8c_a894bdfa2d603d8343f8ef01dda6fcd23}\label{hw0401_8c_a894bdfa2d603d8343f8ef01dda6fcd23}} 
+uint32\+\_\+t \mbox{\hyperlink{hw0401_8c_a894bdfa2d603d8343f8ef01dda6fcd23}{offset}}
+\begin{DoxyCompactList}\small\item\em B\+MP reserve. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{hw0401_8c_a841923a20e6dda97c59351c8e97c9be6}\label{hw0401_8c_a841923a20e6dda97c59351c8e97c9be6}} 
+uint32\+\_\+t \mbox{\hyperlink{hw0401_8c_a841923a20e6dda97c59351c8e97c9be6}{header\+\_\+size}}
+\begin{DoxyCompactList}\small\item\em B\+MP header\+\_\+size. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{hw0401_8c_a325272ddd9a962f05deb905101d25cbd}\label{hw0401_8c_a325272ddd9a962f05deb905101d25cbd}} 
+uint32\+\_\+t \mbox{\hyperlink{hw0401_8c_a325272ddd9a962f05deb905101d25cbd}{width}}
+\begin{DoxyCompactList}\small\item\em B\+MP width. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{hw0401_8c_a6ad4f820ce4e75cda0686fcaad5168be}\label{hw0401_8c_a6ad4f820ce4e75cda0686fcaad5168be}} 
+uint32\+\_\+t \mbox{\hyperlink{hw0401_8c_a6ad4f820ce4e75cda0686fcaad5168be}{height}}
+\begin{DoxyCompactList}\small\item\em B\+MP height. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{hw0401_8c_a5f6caf51b5ce3eb6fc340a667126406b}\label{hw0401_8c_a5f6caf51b5ce3eb6fc340a667126406b}} 
+uint16\+\_\+t \mbox{\hyperlink{hw0401_8c_a5f6caf51b5ce3eb6fc340a667126406b}{planes}}
+\begin{DoxyCompactList}\small\item\em B\+MP planes. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{hw0401_8c_a735dcf34c8e4b61c7c57428dd4d9d8b7}\label{hw0401_8c_a735dcf34c8e4b61c7c57428dd4d9d8b7}} 
+uint16\+\_\+t \mbox{\hyperlink{hw0401_8c_a735dcf34c8e4b61c7c57428dd4d9d8b7}{bpp}}
+\begin{DoxyCompactList}\small\item\em B\+MP bpp. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{hw0401_8c_aa379ffab5097352ba49ec9358c38cf4e}\label{hw0401_8c_aa379ffab5097352ba49ec9358c38cf4e}} 
+uint32\+\_\+t \mbox{\hyperlink{hw0401_8c_aa379ffab5097352ba49ec9358c38cf4e}{compression}}
+\begin{DoxyCompactList}\small\item\em B\+MP compression. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{hw0401_8c_adc20b162ae95dbf49815766245921271}\label{hw0401_8c_adc20b162ae95dbf49815766245921271}} 
+uint32\+\_\+t \mbox{\hyperlink{hw0401_8c_adc20b162ae95dbf49815766245921271}{bitmap\+\_\+size}}
+\begin{DoxyCompactList}\small\item\em B\+MP bitmap\+\_\+size. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{hw0401_8c_af091a018a02606a02323b11dcb887042}\label{hw0401_8c_af091a018a02606a02323b11dcb887042}} 
+uint32\+\_\+t \mbox{\hyperlink{hw0401_8c_af091a018a02606a02323b11dcb887042}{hres}}
+\begin{DoxyCompactList}\small\item\em B\+MP hres. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{hw0401_8c_a97e24a0857bb94fa5fc76ec2fd3caadf}\label{hw0401_8c_a97e24a0857bb94fa5fc76ec2fd3caadf}} 
+uint32\+\_\+t \mbox{\hyperlink{hw0401_8c_a97e24a0857bb94fa5fc76ec2fd3caadf}{vres}}
+\begin{DoxyCompactList}\small\item\em B\+MP vres. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{hw0401_8c_a5e1ebda31e026934b2091d2d0051818a}\label{hw0401_8c_a5e1ebda31e026934b2091d2d0051818a}} 
+uint32\+\_\+t \mbox{\hyperlink{hw0401_8c_a5e1ebda31e026934b2091d2d0051818a}{used}}
+\begin{DoxyCompactList}\small\item\em B\+MP used. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{hw0401_8c_acfae9a9f9729b66dd145ba9628684aa8}\label{hw0401_8c_acfae9a9f9729b66dd145ba9628684aa8}} 
+uint32\+\_\+t \mbox{\hyperlink{hw0401_8c_acfae9a9f9729b66dd145ba9628684aa8}{important}}
+\begin{DoxyCompactList}\small\item\em B\+MP important. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+This program is used to apply Visual Cryptography on bmp file. Which will turn it to gray scale only and make it 2$\ast$2 bigger. By using 4 pixel to represent one pixel. 
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{hw0401_8c_a0ddf1224851353fc92bfbff6f499fa97}\label{hw0401_8c_a0ddf1224851353fc92bfbff6f499fa97}} 
+\index{hw0401.c@{hw0401.c}!main@{main}}
+\index{main@{main}!hw0401.c@{hw0401.c}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily int main (\begin{DoxyParamCaption}\item[{int}]{argc,  }\item[{char $\ast$}]{argv\mbox{[}$\,$\mbox{]} }\end{DoxyParamCaption})}
+
+The main work start from here. We use four F\+I\+LE stream to read or write the F\+I\+LE.
+
+Check calidity of the input bmp F\+I\+LE first.
+
+rename three F\+I\+LE \+: filename\+\_\+layer1.\+bmp filename\+\_\+layer2.\+bmp filename\+\_\+overlap.\+bmp
+
+combine layer1 and layer 2
+
+trans them to gray mode
+
+determined the color of the pixel and apply Visual Cryptography
+
+write the pixel on the file\mbox{\Hypertarget{hw0401_8c_a3cd148e40fd0371edd8cb4946b80ab29}\label{hw0401_8c_a3cd148e40fd0371edd8cb4946b80ab29}} 
+\index{hw0401.c@{hw0401.c}!transheader@{transheader}}
+\index{transheader@{transheader}!hw0401.c@{hw0401.c}}
+\doxysubsubsection{\texorpdfstring{transheader()}{transheader()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{struct__sBmpHeader}{s\+Bmp\+Header}} transheader (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct__sBmpHeader}{s\+Bmp\+Header}}}]{p\+Header }\end{DoxyParamCaption})}
+
+This function will return the header of 2$\ast$2 times of the original bmp header. 

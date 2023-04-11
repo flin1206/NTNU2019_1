@@ -1,0 +1,17 @@
+Save the following code to {\ttfamily makefile}.
+
+Notice that c\+U\+RL has a program, {\ttfamily curl-\/config}, that behaves like {\ttfamily pkg-\/config}, but is c\+U\+R\+L-\/specific.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{CFLAGS =-\/g -\/Wall -\/O3  `curl-\/config -\/-\/cflags` -\/I/usr/include/libxml2}
+\DoxyCodeLine{LDLIBS=`curl-\/config -\/-\/libs ` -\/lxml2}
+\DoxyCodeLine{CC=c99}
+\DoxyCodeLine{}
+\DoxyCodeLine{nyt\_feed:}
+\end{DoxyCode}
+
+
+Having saved your makefile, use {\ttfamily make nyt\+\_\+feed} to compile.
+
+Of course, you have to have the development packages for libcurl and libxml2 installed for this to work. 

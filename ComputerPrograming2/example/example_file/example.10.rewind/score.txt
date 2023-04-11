@@ -1,0 +1,10 @@
+1	Alice	100
+2	Bob		92
+3	Cathy	53
+4	Daniel	67
+5	Eve		83
+6	Fred	78
+7	Gary	65
+8	Henry	35
+9	Iverson	77
+10	Jack	89
